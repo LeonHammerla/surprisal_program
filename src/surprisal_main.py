@@ -1,8 +1,8 @@
 from numbers import Real
-from typing import Any
+from typing import Any, Optional
 import argparse
 from dataclasses import dataclass
-
+from huggingface_hub import login
 import pandas as pd
 from minicons import scorer
 from minicons.scorer import IncrementalLMScorer
@@ -167,6 +167,7 @@ class Args:
     text_col: str
     target_col: str
     batch_size: int
+    auth_tok: Optional[str]
     seq_aggr: str
 
 
@@ -220,6 +221,12 @@ def parse_args(argv=None) -> Args:
         type=int,
         default=16,
         help="Batch size for scoring. Default: 16",
+    )
+
+    p.add_argument(
+        "--auth-tok",
+        default=None,
+        help="Auth Token",
     )
 
     p.add_argument(
@@ -279,6 +286,8 @@ def process_scv(csv_in_path: str,
 
 
 def main(arg: Args):
+    print(arg.auth_tok)
+    login(arg.auth_tok)
     if arg.model_type == "mlm":
         scorer_model = FixedMaskedLMScorer(arg.model, device=arg.device)
     elif arg.model_type == "inc":
@@ -297,7 +306,7 @@ def main(arg: Args):
                 target_col=arg.target_col,
                 seq_aggr=arg.seq_aggr,
                 tokenize_function=tokenize_function,
-                scorer_model=scorer_model, )
+                scorer_model=scorer_model)
 
 
 if __name__ == "__main__":
