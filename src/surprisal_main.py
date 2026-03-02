@@ -259,7 +259,7 @@ def process_scv(csv_in_path: str,
             reduction=lambda x: -x.sum(0).item() if seq_aggr == "sum" else -x.mean(0).item(),
         )[0]
 
-        tok_score = scorer_model.word_score_tokenized([text], tokenize_function,surprisal=True)[0]
+        tok_score = scorer_model.word_score_tokenized([text], tokenize_function, surprisal=True)[0]
         scores.append(score)
         tok_scores.append(tok_score)
 
