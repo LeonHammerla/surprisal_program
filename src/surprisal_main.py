@@ -266,7 +266,7 @@ def process_scv(csv_in_path: str,
             reduction=lambda x: -x.sum(0).item() if seq_aggr == "sum" else -x.mean(0).item(),
         )[0]
 
-        tok_score = scorer_model.word_score_tokenized([text], tokenize_function, surprisal=True)[0]
+        tok_score = scorer_model.word_score_tokenized([text], tokenize_function, surprisal=True, eos_token=True)[0]
         scores.append(score)
         tok_scores.append(tok_score)
 
@@ -341,7 +341,7 @@ if __name__ == "__main__":
                 target_col="Target",
                 seq_aggr="mean",
                 tokenize_function=TweetTokenizer().tokenize,
-                scorer_model=IncrementalLMScorer("goldfish-models/deu_latn_1000mb", device="cuda:0"))
+                scorer_model=IncrementalLMScorer("LeoLM/leo-hessianai-7b", device="cpu"))
 
     # args = parse_args()
     # main(args)
