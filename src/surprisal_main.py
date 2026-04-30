@@ -259,7 +259,7 @@ def process_scv(csv_in_path: str,
     target_scores = []
     for idx, row in tqdm(df.iterrows(), desc="Scoring", total=len(df)):
         text = str(row[text_col])
-        target = str(row[target_col])
+        target = str(row[target_col]).strip()
 
         score = scorer_model.sequence_score(
             [text],
@@ -310,10 +310,10 @@ def main(arg: Args):
 
 
 if __name__ == "__main__":
-    """
-    mlm_model = FixedMaskedLMScorer("google/bert_uncased_L-2_H-128_A-2", device="cuda:0")
+
+    #mlm_model = FixedMaskedLMScorer("google/bert_uncased_L-2_H-128_A-2", device="cuda:0")
     
-    ilm_model = scorer.IncrementalLMScorer('sshleifer/tiny-gpt2', 'cuda:0')
+    """ilm_model = scorer.IncrementalLMScorer('goldfish-models/deu_latn_1000mb', 'cuda:0')
     
     stimuli = ["It is a microspectrophotometry misunderstanding that the keys to the cabinet are on the table.",
                "The keys to the cabinet is on the table."]
@@ -323,8 +323,8 @@ if __name__ == "__main__":
     print(ilm_model.token_score(stimuli, surprisal=True))
     
     # MLM scoring, inspired by Salazar et al., 2020
-    print(mlm_model.sequence_score(stimuli, reduction = lambda x: -x.sum(0).item()))
-    print(mlm_model.token_score(stimuli, surprisal=True))
+    # print(mlm_model.sequence_score(stimuli, reduction = lambda x: -x.sum(0).item()))
+    # print(mlm_model.token_score(stimuli, surprisal=True))
     
     
     print(ilm_model.word_score_tokenized(
@@ -333,11 +333,15 @@ if __name__ == "__main__":
             tokenize_function=TweetTokenizer().tokenize,
             surprisal=True,
             # bow_correction=True,
-        ))
-    
-    
-    
-    print(mlm_model.word_surprisal_mlm(stimuli[0], TweetTokenizer().tokenize))
-    """
-    args = parse_args()
-    main(args)
+        ))"""
+
+    process_scv(csv_in_path="/home/staff_homes/lehammer/Documents/work/surprisal_program/data/input_German.csv",
+                csv_out_path="/home/staff_homes/lehammer/Documents/work/surprisal_program/data/input_German_out.csv",
+                text_col="Sentence",
+                target_col="Target",
+                seq_aggr="mean",
+                tokenize_function=TweetTokenizer().tokenize,
+                scorer_model=IncrementalLMScorer("goldfish-models/deu_latn_1000mb", device="cuda:0"))
+
+    # args = parse_args()
+    # main(args)

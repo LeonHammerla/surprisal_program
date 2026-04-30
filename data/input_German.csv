@@ -1,0 +1,10 @@
+Item,Condition,Sentence,Target
+1,masculine-neu,Klicke auf sein,sein
+1,masculine-fem,Klicke auf seine,seine 
+1,masculine-masc,Klicke auf seinen,seinen 
+2,feminine-neu,Klicke auf ihr,ihr 
+2,feminine-fem,Klicke auf ihre,ihre 
+2,feminine-masc,Klicke auf ihren,ihren
+3,determiner-neu,Klicke auf ein,ein
+3,determiner-fem,Klicke auf eine,eine
+3,determiner-masc,Klicke auf einen,einen
