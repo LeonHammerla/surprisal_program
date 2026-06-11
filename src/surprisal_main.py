@@ -341,7 +341,10 @@ if __name__ == "__main__":
                 target_col="Target",
                 seq_aggr="mean",
                 tokenize_function=TweetTokenizer().tokenize,
-                scorer_model=IncrementalLMScorer("LeoLM/leo-hessianai-7b", device="cpu"))
+                scorer_model=IncrementalLMScorer(
+                    "goldfish-models/deu_latn_1000mb",
+                    #"LeoLM/leo-hessianai-7b",
+                        device="cpu"))
 
     # args = parse_args()
     # main(args)
